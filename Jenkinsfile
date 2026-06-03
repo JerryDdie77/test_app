@@ -31,7 +31,7 @@ pipeline {
 
         stage('Clean Workspace') {
             steps {
-                cleanWs()
+                sh 'rm -rf ${WORKSPACE}/*'
             }
         }
     }

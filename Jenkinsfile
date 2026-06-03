@@ -1,37 +1,37 @@
 pipeline {
     agent any
-    
+
     parameters {
-        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Select deployment environment')
+        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Среда деплоя')
     }
-    
+
     stages {
-        stage('Print Environment') {
+        stage('Print Message') {
             steps {
                 echo "Deploying to ${params.ENV}"
             }
         }
-        
-        stage('Copy Files via SSH') {
+
+        stage('Deploy via SSH') {
             steps {
-                script {
-                    sh 'ls -la'
-                }
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
                             configName: 'worker',
                             transfers: [
                                 sshTransfer(
-                                    sourceFiles: '**/*',
-                                    remoteDirectory: "${params.ENV}",
-                                    execCommand: 'echo "Files copied to ${params.ENV}"'
+                                    sourceFiles: '**/*'
                                 )
-                            ],
-                            dryRun: false
+                            ]
                         )
                     ]
                 )
+            }
+        }
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
             }
         }
     }

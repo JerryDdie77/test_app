@@ -6,8 +6,8 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/health", healthHandler)
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", healthHandler)
+	http.ListenAndServe(":5000", nil)
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {

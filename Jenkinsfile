@@ -5,10 +5,6 @@ pipeline {
         choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Select deployment environment')
     }
     
-    options {
-        cleanWs()
-    }
-    
     stages {
         stage('Print Environment') {
             steps {
@@ -18,6 +14,9 @@ pipeline {
         
         stage('Copy Files via SSH') {
             steps {
+                script {
+                    sh 'ls -la'
+                }
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(

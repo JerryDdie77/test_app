@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    
+    triggers {
+        pollSCM('H/3 * * * *')
+    }
+    
+    stages {
+        stage('Deploy') {
+            steps {
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'worker', transfers: [sshTransfer(sourceFiles: '**/*', remoteDirectory: '')])])
+            }
+        }
+    }
+}

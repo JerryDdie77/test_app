@@ -15,3 +15,5 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	response := map[string]string{"response": "ok"}
 	json.NewEncoder(w).Encode(response)
 }
+
+// Комментарий
